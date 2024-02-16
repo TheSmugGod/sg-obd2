@@ -17,7 +17,9 @@ AddEventHandler('obd2:ReadData', function(vehicle, vehicleNetId)
                 centered = true,
                 cancel = true
             })
+			if Config.debugprint then
             print(faultAlert)
+			end
         else
            -- print("No OBD2 Data Found")
             -- Handle notifying the player that no data is available
@@ -28,7 +30,9 @@ AddEventHandler('obd2:ReadData', function(vehicle, vehicleNetId)
             })
         end
     else
+		if Config.debugprint then
         print("You must be in a vehicle to set OBD2 data.")
+		end
     end
 end)
 
@@ -50,7 +54,9 @@ AddEventHandler('obd2:UseScanner', function(vehicle, vehicleNetId)
             -- Handle notifying the player that no data is available
       --  end
     else
+		if Config.debugprint then
         print("You must be in a vehicle to set OBD2 data.")
+		end
     end
 end)
 
@@ -59,9 +65,13 @@ AddEventHandler("obd2:setData", function(vehicleNetId, obd2Data)
     local vehicle = NetworkGetEntityFromNetworkId(vehicleNetId)
     if DoesEntityExist(vehicle) then
         Entity(vehicle).state.FaultData = obd2Data
+		if Config.debugprint then
         print("Updated OBD2 Data to:", Entity(vehicle).state.FaultData)
+		end
     else
+		if Config.debugprint then
         print("Invalid vehicle network ID received:", vehicleNetId)
+		end
     end
 end)
 
@@ -69,8 +79,10 @@ end)
 RegisterNetEvent('obd2:DisplayEngineStatus')
 AddEventHandler('obd2:DisplayEngineStatus', function(engineDamaged)
     if engineDamaged then
-       print("Vehicle engine is damaged ")
+		if Config.debugprint then
+		print("Vehicle engine is damaged ")
         -- Handle notifying the player that the engine is damaged
+		end
     else
        -- print("Vehicle engine is not damaged")
         -- Handle notifying the player that the engine is not damaged
@@ -86,7 +98,9 @@ AddEventHandler('entityDamaged', function(victim, attacker, weaponHash, damage)
         if engineHealth > 675 and engineHealth < 800 then
             -- Engine health is between 700 and 800
             -- Set Data to P0128 - Coolant Temperature Below Thermostat Regulating Temperature
+			if Config.debugprint then
             print(engineHealth)
+			end
             TriggerServerEvent('obd2:UpdateTheDamage', vehicle, 'P0128 - Coolant Temperature Below Thermostat Regulating Temperature')
         end
 
