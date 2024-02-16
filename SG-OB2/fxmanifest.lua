@@ -8,10 +8,15 @@ lua54 'yes'
 
 -- Define the script dependency
 dependencies {
-    'es_extended'
+    'ox_lib',
+    'es_extended',   --comment me out if using qb
+    --'qb-core'      --comment me out if useing esx
 }
 
-shared_script '@ox_lib/init.lua'
+shared_scripts {
+    '@ox_lib/init.lua',
+    'config.lua'
+}
 
 -- Specify the entry point for your script
 client_script 'client.lua'
