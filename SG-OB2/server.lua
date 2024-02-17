@@ -1,4 +1,4 @@
-if Config.framework = "esx" then
+if Config.framework == "esx" then
 
 local ESX = exports["es_extended"]:getSharedObject()
 	ESX.RegisterUsableItem('obd2', function(source)
@@ -10,7 +10,7 @@ local ESX = exports["es_extended"]:getSharedObject()
 		end
 	end)
 
-elseif Config.framework = "none" then 
+elseif Config.framework == "none" then 
 
 --  command to check vehicle engine damage
 RegisterCommand("obd2", function(source, args, rawCommand)
@@ -22,7 +22,7 @@ RegisterCommand("obd2", function(source, args, rawCommand)
 		end
 end, false)
 
-elseif Config.framework = "qb" then 
+elseif Config.framework == "qb" then 
 
 
 local QBCore = exports['qb-core']:GetCoreObject()
