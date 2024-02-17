@@ -1,16 +1,30 @@
-ESX = exports["es_extended"]:getSharedObject()
+if Config.framework = "esx" then
 
--- Register the scanner as a usable item
-ESX.RegisterUsableItem('obd2', function(source)
-   --local xPlayer = ESX.GetPlayerFromId(source)
-   local playerped = GetPlayerPed(source)
-   local vehicle = GetVehiclePedIsIn(playerped, false)
-   if vehicle then
-    local vehicleNetId = NetworkGetNetworkIdFromEntity(vehicle)
-    TriggerClientEvent('obd2:UseScanner', source, vehicle, vehicleNetId) -- Pass the vehicle to the clients
-   end
-end)
+local ESX = exports["es_extended"]:getSharedObject()
+	ESX.RegisterUsableItem('obd2', function(source)
+	local playerped = GetPlayerPed(source)
+	local vehicle = GetVehiclePedIsIn(playerped, false)
+		if vehicle then
+			local vehicleNetId = NetworkGetNetworkIdFromEntity(vehicle)
+			TriggerClientEvent('obd2:UseScanner', source, vehicle, vehicleNetId) -- Pass the vehicle to the clients
+		end
+	end)
 
+elseif Config.framework = "qb" then 
+
+
+local QBCore = exports['qb-core']:GetCoreObject()
+
+	QBCore.Functions.CreateUseableItem("obd2", function(source, item)
+	local playerped = GetPlayerPed(source)
+	local vehicle = GetVehiclePedIsIn(playerped, false)
+		if vehicle then
+			local vehicleNetId = NetworkGetNetworkIdFromEntity(vehicle)
+			TriggerClientEvent('obd2:UseScanner', source, vehicle, vehicleNetId) -- Pass the vehicle to the clients
+		end
+	end)
+
+end
 
 RegisterCommand("set_obd2_data", function(source, args, rawCommand)
     local playerped = GetPlayerPed(source)
@@ -20,12 +34,18 @@ RegisterCommand("set_obd2_data", function(source, args, rawCommand)
         local vehicleNetId = NetworkGetNetworkIdFromEntity(vehicle)
         if vehicleNetId ~= 0 then
             TriggerClientEvent("obd2:setData", source, vehicleNetId, obd2Data)
+			if Config.debugprint then
             print("OBD2 data set successfully:", obd2Data)
+			end
         else
+		if Config.debugprint then
             print("Failed to get network ID for the vehicle.")
+			end
         end
     else
+		if Config.debugprint then
         print("You must be in a vehicle to set OBD2 data.")
+		end
     end
 end, false)
 
@@ -88,11 +108,17 @@ AddEventHandler('obd2:UpdateTheDamage', function(veh, faultdata)
         local vehicleNetId = NetworkGetNetworkIdFromEntity(vehicle)
         if vehicleNetId ~= 0 then
             TriggerClientEvent("obd2:setData", source, vehicleNetId, obd2Data)
+			if Config.debugprint then
             print("OBD2 data set successfully:", obd2Data)
+			end
         else
+			if Config.debugprint then
             print("Failed to get network ID for the vehicle.")
+			end
         end
     else
+		if Config.debugprint then
         print("You must be in a vehicle to set OBD2 data.")
+		end
     end
 end)
