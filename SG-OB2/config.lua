@@ -1,5 +1,5 @@
 Config = {}
-Config.framework = "qb" -- esx or qb
+Config.framework = "none" -- esx / qb / or none for standalone
 
 Config.debugprint = false
 
