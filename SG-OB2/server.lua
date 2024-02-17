@@ -10,6 +10,18 @@ local ESX = exports["es_extended"]:getSharedObject()
 		end
 	end)
 
+elseif Config.framework = "none" then 
+
+--  command to check vehicle engine damage
+RegisterCommand("obd2", function(source, args, rawCommand)
+    local playerped = GetPlayerPed(source)
+	local vehicle = GetVehiclePedIsIn(playerped, false)
+		if vehicle then
+			local vehicleNetId = NetworkGetNetworkIdFromEntity(vehicle)
+			TriggerClientEvent('obd2:UseScanner', source, vehicle, vehicleNetId) -- Pass the vehicle to the clients
+		end
+end, false)
+
 elseif Config.framework = "qb" then 
 
 
