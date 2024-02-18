@@ -148,5 +148,24 @@ lib.registerContext({
 
 RegisterNetEvent('obd2:DeleteData')
 AddEventHandler('obd2:DeleteData', function()
-print('coming soon')
-end)
+      local playerPed = PlayerPedId()
+      local vehiclePed = GetVehiclePedIsIn(playerPed, false)
+      if vehiclePed then
+          local state = Entity(vehiclePed).state
+          state.FaultData = nil
+          lib.notify({
+              title = 'OBD2 Scanner',
+              description = 'Fault Data Cleared Successfully!',
+              type = 'success'
+          })
+      else
+        if Config.debugprint then
+            print('Unable to clear fault data due to player not in vehicle.')
+			end
+          lib.notify({
+            title = 'OBD2 Scanner',
+            description = 'Fault Data was unable to be Cleared!',
+            type = 'error'
+        })
+      end
+  end)
