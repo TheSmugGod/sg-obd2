@@ -120,7 +120,7 @@ AddEventHandler('entityDamaged', function(victim, attacker, weaponHash, damage)
     end
 end)
 
-
+-- Context Menu
 lib.registerContext({
     id = 'obd2_menu',
     title = 'OBD2 Scanner',
